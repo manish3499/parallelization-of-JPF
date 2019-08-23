@@ -20,7 +20,7 @@
   </head>
   <body data-gr-c-s-loaded="true">
     <section class="page-header">
-      <h1 class="project-name">parallelization-of-JPF</h1>
+      <h1 class="project-name">Parallelization of JPF</h1>
       <h2 class="project-tagline"></h2>
       
         <a href="https://github.com/manish3499/parallelization-of-JPF" class="btn">View on GitHub</a>
@@ -29,12 +29,32 @@
     </section>
 
     <section class="main-content">
-    
     <h2>About JPF and the project</h2>
 <p>The Java Pathfinder Team is an open-source organization which maintains and contributes to the project named Java Pathfinder (JPF) which was initially implemented by NASA in 1999 to verify safety and mission-critical software for its space missions. JPF was made open source in 2005, and since then it has seen vast applications in many industries.</p>
 <p>JPF is a model checking software, which uses a brute force technique to find any errors in a given piece of java code. To perform this, JPF uses symbolic execution and finds errors by finding out property violations while executing all the different execution paths possible. This is quite a slow process, and the purpose of this project is to parallelize the execution to make the error detection faster by making use of multicore processors.</p>
 <p>This project is done under the Google Summer of Code program which is a three-month-long program conducted by Google every year, where students all around the world get the opportunity to work on open source projects under the supervision of experienced mentors</p>
-      
+<h2>Goals and division of the project</h2>
+<p>In order to parallelize JPF, the following things have to be done</p>
+<ol>
+<li>The work has to be divided</li>
+<li>The divided work has to be run on different version of JPF running parallely</li>
+<li>It has to be ensured that the splitting and simultaneous execution works perfectly and covers all the choices in the process.</li>
+</ol>
+<p>&nbsp;</p>
+<p>Each of these steps present uniques challenges and working on the proof of concept involves working on those challenges by implementing primitive solutions. The following sections go in depth about each of these elements.</p>
+<h3>Work Division</h3>
+<p>The state space that is to be explored by JPF can usually be represented as a tree as shown in the diagram above. Now in order to split this work in four parts, we can divide the tree into 4 parts at level 2. Which will split the tree as shown in the figure below.</p>
+<p>&nbsp;</p>
+<p>This is an example of static work partition. In order to implement this in JPF, we have implemented the function concurrentForward() in the class VM.java . This function extracts the Choice Generator ( which is a class that encapsulates and keeps track of all the choices that can be made at a certain point) and splits it as per the requirement.</p>
+<p>&nbsp;</p>
+<p>Note: Currently this function works only with the Verify.verifyInt() API and splits the first choice to divide work.</p>
+<p>As we can see in the image above, the work isn&rsquo;t split equally. In order to solve this problem, we need to follow the approach of work sharing. In order to do this, we try to clone SystemState.java which maintains a record of all the Choice Generators and the execution history. A basic version of this has been implemented and tested using the function concurrentForwardWithSystemStateClone() implemented in the class VM.java .</p>
+<p>&nbsp;</p>
+<h3>Running multiple versions of JPF</h3>
+<p>This is one of the most challenging problems faced because when two versions of JPF are run as two separate processes (on two different terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
+<p>&nbsp;</p>
+<h3>Recording and verifying choices made</h3>
+<p>In order to verify whether all expected choices are being covered by JPF execution, a choice recorder and and a choice record listener have been implemented. It records a pair of choice say m and n to ensure all combinations of m and n that are expected to execute are actually executed.</p>
 
 
       <footer class="site-footer">
