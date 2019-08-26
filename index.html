@@ -79,6 +79,12 @@
 <p>In order to use JPF with sequential choice splitting (branch parallel-search), add the following line to the JPF configuration file.</p>
 <p><code>search.class = .search.ConcurrentDFSearch</code></p>
 <p>Note: Currently it works only with the Verify.getInt() API</p>
+        
+<h3>Recording and verifying a pair choices</h3>
+<p>The class ChoiceCounter.java and the ChoiceListener.java are used for this purpose.</p>
+<p>The ChoiceCounter.addActualChoicePair(m,n) function is used to input all pairs of choices expected to be recorded.</p>
+<p>The ChoiceCounter.recordChoicePair(m,n) function is used to record a pair of choices.</p>
+<p>The ChoiceListener.java listener is used to verify whether the recorded choices and the expected choices are the same. This is done when the search finishes.</p>
 
 
       <footer class="site-footer">
