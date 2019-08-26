@@ -52,7 +52,11 @@
 <p>&nbsp;</p>
 <h3>Running multiple versions of JPF</h3>
 <p>This is one of the most challenging problems faced because when two versions of JPF are run as two separate processes (on two different terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
-        <h3>Changes made</h3>
+
+<h3>Recording and verifying choices made</h3>
+<p>In order to verify whether all expected choices are being covered by JPF execution, a choice recorder and and a choice record listener have been implemented. It records a pair of choice say m and n to ensure all combinations of m and n that are expected to execute are actually executed.</p>
+
+<h3>Changes made</h3>
 <ul>
 <li>Implement VerifyChoiceTest.java to check the default order of the choices made</li>
 <li>Implement FirstChoiceTracker.java - a listener used to intercept the first choice</li>
@@ -70,8 +74,6 @@
 <p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter</a></p>
 <p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run">>https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run</a></p>
 <p>&nbsp;</p>
-<h3>Recording and verifying choices made</h3>
-<p>In order to verify whether all expected choices are being covered by JPF execution, a choice recorder and and a choice record listener have been implemented. It records a pair of choice say m and n to ensure all combinations of m and n that are expected to execute are actually executed.</p>
 
 
       <footer class="site-footer">
