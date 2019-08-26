@@ -72,8 +72,15 @@
 <p>The change made in the code are made in a fork of&nbsp; jpf-core and changes are made on the branch parallel-search, choice-counter and concurrent-jpf-run which can be seen in the following urls</p>
 <p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:parallel-search">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:parallel-search</a></p>
 <p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter</a></p>
-<p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run">>https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run</a></p>
+<p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run</a></p>
 <p>&nbsp;</p>
+        
+<h3>Using JPF with sequential choice split</h3>
+<p>In order to use JPF with sequential choice splitting (branch parallel-search), add the following line to the JPF configuration file.</p>
+<p>&nbsp;</p>
+<p>search.class = .search.ConcurrentDFSearch</p>
+<p>&nbsp;</p>
+<p>Note: Currently it works only with the Verify.getInt() API</p>
 
 
       <footer class="site-footer">
