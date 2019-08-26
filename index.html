@@ -42,14 +42,12 @@
 </ol>
 <p>&nbsp;</p>
 <p>Each of these steps present uniques challenges and working on the proof of concept involves working on those challenges by implementing primitive solutions. The following sections go in depth about each of these elements.</p>
-<h3>Work Division</h3>
-<p>The state space that is to be explored by JPF can usually be represented as a tree as shown in the diagram above. Now in order to split this work in four parts, we can divide the tree into 4 parts at level 2. Which will split the tree as shown in the figure below.</p>
+<h3>Work division</h3>
+<p>In order to divide the work, the state space is shrunk in a coordinated fashion, in order to that, currently the range of choices that are to be made with respect to the first choice generator is reduced to half (either the first half of the second half).</p>
 <p>&nbsp;</p>
-<p>This is an example of static work partition. In order to implement this in JPF, we have implemented the function concurrentForward() in the class VM.java . This function extracts the Choice Generator ( which is a class that encapsulates and keeps track of all the choices that can be made at a certain point) and splits it as per the requirement.</p>
+<p>Such changes takes place in the VM.java class and are performed in the concurrentForward() and concurrentForwardWithSystemStateClone() funtions.</p>
 <p>&nbsp;</p>
 <p>Note: Currently this function works only with the Verify.verifyInt() API and splits the first choice to divide work.</p>
-<p>As we can see in the image above, the work isn&rsquo;t split equally. In order to solve this problem, we need to follow the approach of work sharing. In order to do this, we try to clone SystemState.java which maintains a record of all the Choice Generators and the execution history. A basic version of this has been implemented and tested using the function concurrentForwardWithSystemStateClone() implemented in the class VM.java .</p>
-<p>&nbsp;</p>
 <h3>Running multiple versions of JPF</h3>
 <p>This is one of the most challenging problems faced because when two versions of JPF are run as two separate processes (on two different terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
 
