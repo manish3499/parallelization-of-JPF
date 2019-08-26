@@ -52,6 +52,23 @@
 <p>&nbsp;</p>
 <h3>Running multiple versions of JPF</h3>
 <p>This is one of the most challenging problems faced because when two versions of JPF are run as two separate processes (on two different terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
+        <h3>Changes made</h3>
+<ul>
+<li>Implement VerifyChoiceTest.java to check the default order of the choices made</li>
+<li>Implement FirstChoiceTracker.java - a listener used to intercept the first choice</li>
+<li>Implement the first choice interception and state space reduction in VM.java by reducing the choice range for the first choice made</li>
+<li>Implement Choice Generator cloning in FirstChoiceTracker.java</li>
+<li>Implement ConcurrentDFSearch.java which is derived from DFSearch.java</li>
+<li>Implement SystemState cloning (partial hard copy + partial shallow copy)</li>
+<li>Resolve backtrack error when replacing SystemState instance in VM with a cloned and modified copy</li>
+<li>Implement ChoiceCounter and ChoiceListener to listen to a pair of integer choices made and compare them with expected choices when the search completes</li>
+<li>Implement sequential choice split in JPF by partially reducing (in a coordinated fashion) the state space in two different JPF instances run one after another.</li>
+<li>Implement parallel version of JPF by running two JPF instances simultaneously on two different threads (isn&rsquo;t functional presently due to concurrency issues)</li>
+</ul>
+<p>The change made in the code are made in a fork of&nbsp; jpf-core and changes are made on the branch parallel-search, choice-counter and concurrent-jpf-run which can be seen in the following urls</p>
+<p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:parallel-search">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:parallel-search</a></p>
+<p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter">https://github.com/javapathfinder/jpf-core/compare/master...manish3499:choice-counter</a></p>
+<p><a href="https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run">>https://github.com/javapathfinder/jpf-core/compare/master...manish3499:concurrent-jpf-run</a></p>
 <p>&nbsp;</p>
 <h3>Recording and verifying choices made</h3>
 <p>In order to verify whether all expected choices are being covered by JPF execution, a choice recorder and and a choice record listener have been implemented. It records a pair of choice say m and n to ensure all combinations of m and n that are expected to execute are actually executed.</p>
