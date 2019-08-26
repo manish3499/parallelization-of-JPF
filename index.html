@@ -43,13 +43,9 @@
 <p>&nbsp;</p>
 <p>Each of these steps present uniques challenges and working on the proof of concept involves working on those challenges by implementing primitive solutions. The following sections go in depth about each of these elements.</p>
 <h3>Work division</h3>
-<p>In order to divide the work, the state space is shrunk in a coordinated fashion, in order to that, currently the range of choices that are to be made with respect to the first choice generator is reduced to half (either the first half of the second half).</p>
-<p>&nbsp;</p>
+<p>In order to divide the work, the state space is shrunk in a coordinated fashion such that different parts of it are handled at different places. Currently the range of choices that are to be made with respect to the first choice generator is reduced to half (either the first half or the second half).</p>
 <p>Such changes takes place in the VM.java class and are performed in the concurrentForward() and concurrentForwardWithSystemStateClone() funtions.</p>
-<p>&nbsp;</p>
-<p>Note: Currently this function works only with the Verify.verifyInt() API and splits the first choice to divide work.</p>
-<h3>Running multiple versions of JPF</h3>
-<p>This is one of the most challenging problems faced because when two versions of JPF are run as two separate processes (on two different terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
+<p>Note: Currently this function works only with the Verify.verifyInt() API and splits the first choice to divide work.</p>ifferent terminals or IDEs) , it shows the desirable result and a speedup of nearly 2x (when two versions are run simultaneously) showing that the hardware is capable of supporting the parallelization with a near perfect speedup, but when multiple versions of JPF are run as a part of two different threads, it runs into many unresolved concurrency errors which makes either one or both versions of JPF to stop working due to unexpected errors.</p>
 
 <h3>Recording and verifying choices made</h3>
 <p>In order to verify whether all expected choices are being covered by JPF execution, a choice recorder and and a choice record listener have been implemented. It records a pair of choice say m and n to ensure all combinations of m and n that are expected to execute are actually executed.</p>
